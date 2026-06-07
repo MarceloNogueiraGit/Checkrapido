@@ -1,0 +1,317 @@
+/* ===== RESET & VARIABLES ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:     #4CC8E0;
+  --blue-dk:  #1a9ab8;
+  --blue-lt:  #d4f3f9;
+  --black:    #1a1a1a;
+  --gray-dk:  #333;
+  --gray-md:  #666;
+  --gray-lt:  #e8e8e8;
+  --white:    #ffffff;
+  --radius:   8px;
+  --shadow:   0 4px 20px rgba(0,0,0,0.10);
+}
+
+/* ===== BASE ===== */
+body {
+  font-family: 'Barlow', sans-serif;
+  background: #f0f6f8;
+  color: var(--black);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: var(--white);
+  border-bottom: 3px solid var(--blue);
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px rgba(76,200,224,0.15);
+}
+
+.header-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-title h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.header-title span {
+  font-size: 0.78rem;
+  color: var(--gray-md);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-logo img {
+  height: 64px;
+  object-fit: contain;
+}
+
+/* ===== MAIN ===== */
+main {
+  flex: 1;
+  max-width: 860px;
+  width: 100%;
+  margin: 36px auto;
+  padding: 0 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 36px;
+  margin-bottom: 24px;
+  border-top: 4px solid var(--blue);
+}
+
+.card h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--blue-dk);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card h2::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+/* ===== GRID CAMPOS ===== */
+.fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 24px;
+}
+
+.fields-grid .full {
+  grid-column: 1 / -1;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--gray-md);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+  height: 42px;
+  border: 1.5px solid var(--gray-lt);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.95rem;
+  color: var(--black);
+  background: #fafafa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(76,200,224,0.18);
+  background: var(--white);
+}
+
+/* ===== TIPO EQUIPAMENTO ===== */
+.tipo-toggle {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.tipo-btn {
+  flex: 1;
+  height: 44px;
+  border: 2px solid var(--gray-lt);
+  border-radius: var(--radius);
+  background: #fafafa;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gray-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tipo-btn.active {
+  border-color: var(--blue);
+  background: var(--blue-lt);
+  color: var(--blue-dk);
+}
+
+.tipo-btn:hover:not(.active) {
+  border-color: #aaa;
+}
+
+/* ===== SEMI-REBOQUE BLOCKS ===== */
+.reboque-block {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reboque-block.visible {
+  display: flex;
+}
+
+/* ===== TEXTAREA ===== */
+textarea {
+  width: 100%;
+  border: 1.5px solid var(--gray-lt);
+  border-radius: var(--radius);
+  padding: 14px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.95rem;
+  color: var(--black);
+  background: #fafafa;
+  resize: vertical;
+  min-height: 140px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  line-height: 1.6;
+}
+
+textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(76,200,224,0.18);
+  background: var(--white);
+}
+
+.textarea-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--blue-dk);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.textarea-label::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+.service-block {
+  margin-bottom: 20px;
+}
+
+.service-block:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== BOTÃO GERAR PDF ===== */
+.btn-generate {
+  width: 100%;
+  height: 54px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dk));
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(76,200,224,0.35);
+}
+
+.btn-generate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(76,200,224,0.45);
+}
+
+.btn-generate:active {
+  transform: translateY(0);
+}
+
+.btn-generate svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+/* ===== OS NUMBER TAG ===== */
+.os-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--blue-lt);
+  color: var(--blue-dk);
+  border: 1.5px solid var(--blue);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 0.75rem;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  header { padding: 12px 18px; }
+  main { margin: 20px auto; }
+  .card { padding: 22px 18px; }
+  .fields-grid { grid-template-columns: 1fr; }
+  .fields-grid .full { grid-column: 1; }
+}
