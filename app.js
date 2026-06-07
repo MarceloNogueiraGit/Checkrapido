@@ -106,76 +106,73 @@ function gerarPDF() {
   const grayLt  = [232, 232, 232];
   const white   = [255, 255, 255];
 
-  // ── HEADER BAR ──
+  // ── HEADER BAR (compacto: 28px) ──
   doc.setFillColor(...blue);
-  doc.rect(0, 0, W, 36, 'F');
+  doc.rect(0, 0, W, 28, 'F');
 
-  // Logo (top right)
   if (typeof LOGO_B64 !== 'undefined') {
-    doc.addImage(LOGO_B64, 'PNG', W - 56, 2, 50, 32);
+    doc.addImage(LOGO_B64, 'PNG', W - 48, 1, 42, 26);
   }
 
-  // Title text
   doc.setTextColor(...white);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(18);
-  doc.text('ORDEM DE SERVIÇO', marginL, 16);
-  doc.setFontSize(9);
+  doc.setFontSize(15);
+  doc.text('ORDEM DE SERVIÇO', marginL, 12);
+  doc.setFontSize(7.5);
   doc.setFont('helvetica', 'normal');
-  doc.text('JCE TRANSPORTES — MANUTENÇÃO VEICULAR', marginL, 24);
+  doc.text('JCE TRANSPORTES — MANUTENÇÃO VEICULAR', marginL, 19);
 
-  // OS number badge
+  // badge OS
   doc.setFillColor(...blueDk);
-  doc.roundedRect(marginL, 27, 54, 7, 2, 2, 'F');
+  doc.roundedRect(marginL, 21, 46, 5.5, 1.5, 1.5, 'F');
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9);
+  doc.setFontSize(7.5);
   doc.setTextColor(...white);
-  doc.text('OS Nº ' + osNum, marginL + 3, 32.5);
+  doc.text('OS Nº ' + osNum, marginL + 2, 25.2);
 
-  y = 42;
+  y = 33;
 
-  // ── SECTION HELPER ──
+  // ── SECTION HELPER (compacto: 9px alto) ──
   function sectionTitle(title, yPos) {
     doc.setFillColor(...blue);
-    doc.rect(marginL, yPos, 3, 7, 'F');
+    doc.rect(marginL, yPos, 3, 5.5, 'F');
     doc.setTextColor(...blueDk);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
-    doc.text(title.toUpperCase(), marginL + 6, yPos + 5.2);
+    doc.setFontSize(8);
+    doc.text(title.toUpperCase(), marginL + 5, yPos + 4.2);
     doc.setDrawColor(...grayLt);
-    doc.setLineWidth(0.3);
-    doc.line(marginL + 6 + doc.getTextWidth(title.toUpperCase()) + 3, yPos + 2.5, marginR, yPos + 2.5);
-    return yPos + 12;
+    doc.setLineWidth(0.25);
+    doc.line(marginL + 5 + doc.getTextWidth(title.toUpperCase()) + 2, yPos + 2, marginR, yPos + 2);
+    return yPos + 9;
   }
 
-  // ── FIELD HELPER (single row) ──
+  // ── FIELD HELPER (altura 8px, espaçamento 11) ──
   function fieldRow(fields, yPos) {
-    // fields: [{label, value, x, w}]
     fields.forEach(f => {
       doc.setFillColor(250, 250, 250);
       doc.setDrawColor(...grayLt);
-      doc.setLineWidth(0.3);
-      doc.roundedRect(f.x, yPos, f.w, 10, 1.5, 1.5, 'FD');
+      doc.setLineWidth(0.25);
+      doc.roundedRect(f.x, yPos, f.w, 8.5, 1, 1, 'FD');
       doc.setTextColor(...grayMd);
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(6.5);
-      doc.text(f.label.toUpperCase(), f.x + 3, yPos + 4);
+      doc.setFontSize(5.8);
+      doc.text(f.label.toUpperCase(), f.x + 2.5, yPos + 3.2);
       doc.setTextColor(...black);
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
-      doc.text(f.value || '', f.x + 3, yPos + 8.5);
+      doc.setFontSize(8.5);
+      doc.text(f.value || '', f.x + 2.5, yPos + 7.4);
     });
-    return yPos + 14;
+    return yPos + 11;
   }
 
   // ── DADOS GERAIS ──
   y = sectionTitle('Dados da Ordem de Serviço', y);
 
   y = fieldRow([
-    { label: 'Data', value: fmtDate(data), x: marginL, w: 44 },
-    { label: 'Hora', value: hora || '', x: marginL + 48, w: 34 },
-    { label: 'Tipo de Equipamento', value: rodotrem ? 'Rodotrem' : 'Vanderleia', x: marginL + 86, w: 50 },
-    { label: 'Nº OS', value: osNum, x: marginL + 140, w: 42 }
+    { label: 'Data',               value: fmtDate(data),                   x: marginL,        w: 40 },
+    { label: 'Hora',               value: hora || '',                       x: marginL + 43,   w: 28 },
+    { label: 'Tipo de Equipamento',value: rodotrem ? 'Rodotrem':'Vanderleia',x: marginL + 74,  w: 44 },
+    { label: 'Nº OS',              value: osNum,                            x: marginL + 121,  w: 61 }
   ], y);
 
   y = fieldRow([
@@ -187,45 +184,42 @@ function gerarPDF() {
 
   if (rodotrem) {
     y = fieldRow([
-      { label: 'Placa Cavalo Mecânico', value: placa_cav, x: marginL, w: 55 },
-      { label: 'Placa Semi-Reboque 1',  value: placa_sr1, x: marginL + 59, w: 55 },
-      { label: 'Placa Semi-Reboque 2',  value: placa_sr2, x: marginL + 118, w: 64 }
+      { label: 'Placa Cavalo Mecânico', value: placa_cav, x: marginL,        w: 57 },
+      { label: 'Placa Semi-Reboque 1',  value: placa_sr1, x: marginL + 60,   w: 57 },
+      { label: 'Placa Semi-Reboque 2',  value: placa_sr2, x: marginL + 120,  w: 62 }
     ], y);
   } else {
     y = fieldRow([
-      { label: 'Placa Cavalo Mecânico', value: placa_cav, x: marginL, w: 86 },
-      { label: 'Placa Semi-Reboque',    value: placa_sr1, x: marginL + 90, w: 92 }
+      { label: 'Placa Cavalo Mecânico', value: placa_cav, x: marginL,       w: 88 },
+      { label: 'Placa Semi-Reboque',    value: placa_sr1, x: marginL + 92,  w: 90 }
     ], y);
   }
 
-  // ── TEXTO OS HELPER ──
+  // ── SERVIÇO BLOCK (title 6px + box dinâmico) ──
   function servicoBlock(title, texto, yPos) {
     const usableW = marginR - marginL;
-    // title row
     doc.setFillColor(...blue);
-    doc.rect(marginL, yPos, usableW, 8, 'F');
+    doc.rect(marginL, yPos, usableW, 6, 'F');
     doc.setTextColor(...white);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8.5);
-    doc.text(title.toUpperCase(), marginL + 4, yPos + 5.5);
-    yPos += 8;
+    doc.setFontSize(7.5);
+    doc.text(title.toUpperCase(), marginL + 3, yPos + 4.3);
+    yPos += 6;
 
-    // text box
-    const boxH = 42;
+    const boxH = 36;
     doc.setFillColor(252, 252, 252);
     doc.setDrawColor(...grayLt);
-    doc.setLineWidth(0.3);
+    doc.setLineWidth(0.25);
     doc.rect(marginL, yPos, usableW, boxH, 'FD');
 
-    // wrap text
     if (texto) {
       doc.setTextColor(...black);
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
-      const lines = doc.splitTextToSize(texto, usableW - 8);
-      doc.text(lines, marginL + 4, yPos + 6);
+      doc.setFontSize(8.5);
+      const lines = doc.splitTextToSize(texto, usableW - 6);
+      doc.text(lines, marginL + 3, yPos + 5.5);
     }
-    return yPos + boxH + 6;
+    return yPos + boxH + 4;
   }
 
   // ── SERVIÇOS ──
@@ -242,55 +236,83 @@ function gerarPDF() {
   // ── CONCLUSÃO ──
   y = sectionTitle('Conclusão da Ordem de Serviço', y);
 
-  // conclusão fields
   y = fieldRow([
-    { label: 'Data de Conclusão', value: '', x: marginL, w: 64 },
-    { label: 'Hora de Conclusão', value: '', x: marginL + 68, w: 42 },
-    { label: 'Status', value: '', x: marginL + 114, w: 68 }
+    { label: 'Data de Conclusão', value: '', x: marginL,       w: 58 },
+    { label: 'Hora de Conclusão', value: '', x: marginL + 61,  w: 38 },
+    { label: 'Status',            value: '', x: marginL + 102, w: 80 }
   ], y);
 
-  // observações box
+  // observações box compacto
   doc.setFillColor(250, 250, 250);
   doc.setDrawColor(...grayLt);
-  doc.setLineWidth(0.3);
-  doc.rect(marginL, y, marginR - marginL, 16, 'FD');
+  doc.setLineWidth(0.25);
+  doc.rect(marginL, y, marginR - marginL, 14, 'FD');
   doc.setTextColor(...grayMd);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(6.5);
-  doc.text('OBSERVAÇÕES DE CONCLUSÃO', marginL + 3, y + 4);
-  y += 20;
+  doc.setFontSize(5.8);
+  doc.text('OBSERVAÇÕES DE CONCLUSÃO', marginL + 2.5, y + 3.5);
+  y += 17;
 
   // ── ASSINATURAS ──
   y = sectionTitle('Assinaturas', y);
 
-  const sigW = (marginR - marginL - 12) / 2;
+  const usableW = marginR - marginL;
+  const sigW    = (usableW - 10) / 2;
+  const sigH    = 30;
+
   function sigBox(label, x, yPos) {
-    doc.setDrawColor(...grayLt);
-    doc.setLineWidth(0.3);
+    // caixa
     doc.setFillColor(252, 252, 252);
-    doc.rect(x, yPos, sigW, 26, 'FD');
-    // line
+    doc.setDrawColor(...grayLt);
+    doc.setLineWidth(0.25);
+    doc.rect(x, yPos, sigW, sigH, 'FD');
+
+    // linha de assinatura
     doc.setDrawColor(...grayMd);
-    doc.setLineWidth(0.4);
-    doc.line(x + 8, yPos + 19, x + sigW - 8, yPos + 19);
-    // label
+    doc.setLineWidth(0.35);
+    doc.line(x + 6, yPos + 17, x + sigW - 6, yPos + 17);
+
+    // rótulo abaixo da linha
     doc.setTextColor(...grayMd);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(6.5);
     const lw = doc.getTextWidth(label);
-    doc.text(label, x + (sigW - lw) / 2, yPos + 23.5);
+    doc.text(label, x + (sigW - lw) / 2, yPos + 21);
+
+    // campos data e hora no rodapé da caixa
+    const fieldW = (sigW - 12) / 2;
+    doc.setFillColor(245, 245, 245);
+    doc.setDrawColor(...grayLt);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(x + 3, yPos + sigH - 7.5, fieldW, 6, 0.8, 0.8, 'FD');
+    doc.roundedRect(x + 3 + fieldW + 3, yPos + sigH - 7.5, fieldW, 6, 0.8, 0.8, 'FD');
+
+    doc.setTextColor(...grayMd);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(5.2);
+    doc.text('DATA', x + 3 + 1.5, yPos + sigH - 5.5);
+    doc.text('HORA', x + 3 + fieldW + 3 + 1.5, yPos + sigH - 5.5);
   }
 
-  sigBox('Assinatura do Motorista', marginL, y);
-  sigBox('Assinatura do Chefe de Manutenção', marginL + sigW + 12, y);
+  sigBox('Assinatura do Motorista',           marginL,              y);
+  sigBox('Assinatura do Chefe de Manutenção', marginL + sigW + 10,  y);
 
-  // ── RODAPÉ ──
+  // ── RODAPÉ FIXO ──
+  const footerY = 287;
   doc.setFillColor(...grayLt);
-  doc.rect(0, 287, W, 10, 'F');
+  doc.rect(0, footerY, W, 10, 'F');
+  doc.setFillColor(...blue);
+  doc.rect(0, footerY, 4, 10, 'F');
   doc.setTextColor(...grayMd);
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7);
-  doc.text('JCE Transportes — Documento gerado em ' + fmtDate(new Date().toISOString().split('T')[0]) + ' às ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}), W / 2, 293, { align: 'center' });
+  doc.setFontSize(6.5);
+  const now2 = new Date();
+  doc.text(
+    'JCE Transportes  ·  OS Nº ' + osNum + '  ·  Gerado em ' +
+    fmtDate(now2.toISOString().split('T')[0]) + ' às ' +
+    now2.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+    W / 2, footerY + 6.2, { align: 'center' }
+  );
 
   // ── SAVE ──
   doc.save('OS_JCE_' + osNum + '.pdf');
