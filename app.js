@@ -25,16 +25,19 @@ function setupTipoToggle() {
   const sr2  = document.getElementById('block-sr2');
 
   function activate(tipo) {
+    const sr2Service = document.getElementById('service-sr2');
     if (tipo === 'vanderleia') {
       btnV.classList.add('active');
       btnR.classList.remove('active');
-      sr2.classList.remove('visible');
+      sr2.style.display = 'none';
+      sr2Service.style.display = 'none';
       document.getElementById('label-sr1').textContent = 'Semi-Reboque';
       document.getElementById('placa-sr1-label').textContent = 'Placa Semi-Reboque';
     } else {
       btnR.classList.add('active');
       btnV.classList.remove('active');
-      sr2.classList.add('visible');
+      sr2.style.display = 'flex';
+      sr2Service.style.display = 'block';
       document.getElementById('label-sr1').textContent = 'Semi-Reboque 1';
       document.getElementById('placa-sr1-label').textContent = 'Placa Semi-Reboque 1';
     }
