@@ -133,23 +133,7 @@
     });
   </script>
 
-  <!-- Sync rodotrem visibility for SR2 service block -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const btnR = document.getElementById('btn-rodotrem');
-      const btnV = document.getElementById('btn-vanderleia');
-      const sr2Placa   = document.getElementById('block-sr2');
-      const sr2Service = document.getElementById('service-sr2');
 
-      function syncRodotrem(isRodo) {
-        sr2Placa.style.display   = isRodo ? 'flex' : 'none';
-        sr2Service.style.display = isRodo ? 'block' : 'none';
-      }
-
-      btnR.addEventListener('click', () => syncRodotrem(true));
-      btnV.addEventListener('click', () => syncRodotrem(false));
-    });
-  </script>
 
 </body>
 </html>
