@@ -198,8 +198,9 @@ function gerarPDF() {
     ], y);
   }
 
-  // ── SERVIÇO BLOCK (title 6px + box dinâmico) ──
-  function servicoBlock(title, texto, yPos) {
+  // ── SERVIÇO BLOCK ──
+  function servicoBlock(title, texto, yPos, boxH) {
+    boxH = boxH || 36;
     const usableW = marginR - marginL;
     doc.setFillColor(...blue);
     doc.rect(marginL, yPos, usableW, 6, 'F');
@@ -209,7 +210,6 @@ function gerarPDF() {
     doc.text(title.toUpperCase(), marginL + 3, yPos + 4.3);
     yPos += 6;
 
-    const boxH = 36;
     doc.setFillColor(252, 252, 252);
     doc.setDrawColor(...grayLt);
     doc.setLineWidth(0.25);
@@ -225,15 +225,18 @@ function gerarPDF() {
     return yPos + boxH + 4;
   }
 
+  // rodotrem: 3 blocos menores (28mm) para caber tudo na página
+  const svcH = rodotrem ? 28 : 36;
+
   // ── SERVIÇOS ──
   y = sectionTitle('Descrição dos Serviços', y);
-  y = servicoBlock('Cavalo Mecânico — ' + (placa_cav || 'S/N'), serv_cav, y);
+  y = servicoBlock('Cavalo Mecânico — ' + (placa_cav || 'S/N'), serv_cav, y, svcH);
 
   if (rodotrem) {
-    y = servicoBlock('Semi-Reboque 1 — ' + (placa_sr1 || 'S/N'), serv_sr1, y);
-    y = servicoBlock('Semi-Reboque 2 — ' + (placa_sr2 || 'S/N'), serv_sr2, y);
+    y = servicoBlock('Semi-Reboque 1 — ' + (placa_sr1 || 'S/N'), serv_sr1, y, svcH);
+    y = servicoBlock('Semi-Reboque 2 — ' + (placa_sr2 || 'S/N'), serv_sr2, y, svcH);
   } else {
-    y = servicoBlock('Semi-Reboque — ' + (placa_sr1 || 'S/N'), serv_sr1, y);
+    y = servicoBlock('Semi-Reboque — ' + (placa_sr1 || 'S/N'), serv_sr1, y, svcH);
   }
 
   // ── CONCLUSÃO ──
